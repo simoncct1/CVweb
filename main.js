@@ -157,7 +157,7 @@ scene.add( alight );
       
       } );
     loader.load( 'zoom.glb', function ( gltf ) {
-      const zoom= gltf.scene;
+      zoom= gltf.scene;
      
       gltf.scene.scale.set(1,1,1);
   
@@ -170,7 +170,7 @@ scene.add( alight );
       
       } );
     loader.load( 'download.glb', function ( gltf ) {
-      const down= gltf.scene;
+      down= gltf.scene;
       gltf.scene.scale.set(1.5,1.5,1.5);
       gltf.scene.position.z= -8;
       gltf.scene.position.x= -1;
@@ -267,7 +267,7 @@ function onDocumentMouseDown() {
     
   }
   if (intersects.length > 0 && intersects[0].object.name == "zoom") {
-    window.open("https://github.com/3Y3Z?tab=repositories");
+    document.getElementById("readMode").style.display = "block";
     
   }
   if (intersects.length > 0 && intersects[0].object.name == "trslt") {
@@ -334,7 +334,10 @@ function animate(){
   //   nevermind();
   //   }
  github.rotation.y += 0.005;
- down.rotation.y += 0.003;
+ down.rotation.y += 0.0025;
+//  zoom.rotation.y += 0.005;
+//  mail.rotation.y += 0.005;
+//  translate.rotation.y += 0.005;
  TWEEN.update();
 
   renderer.render(scene, camera);
