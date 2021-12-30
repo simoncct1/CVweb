@@ -38,7 +38,10 @@ const controls = new OrbitControls( camera, renderer.domElement );
 
 
 camera.position.set( -7.4,0,0 );
-
+controls.maxPolarAngle = Math.PI - 0.15;
+controls.minPolarAngle = 0.15;
+controls.minAzimuthAngle = - Math.PI + 0.15; 
+	controls.maxAzimuthAngle = - 0.15; 
 controls.update();
 
 
@@ -117,12 +120,14 @@ scene.add( alight );
   var mail= new THREE.Object3D();
   var github= new THREE.Object3D();
   var translate= new THREE.Object3D();
-  var zoom= new THREE.Object3D();
-  var down= new THREE.Object3D();
+   var down= new THREE.Object3D();
+   var zoom= new THREE.Object3D();
   loader.load( 'maillogo.glb', function ( gltf ) {
     mail = gltf.scene;
     gltf.scene.scale.set(1,1,1);
-
+    gltf.scene.position.z= 3.1;
+    gltf.scene.position.x= -4;
+    gltf.scene.position.y= 1.3;
       scene.add( gltf.scene );
   
     
@@ -147,7 +152,9 @@ scene.add( alight );
     loader.load( 'translate.glb', function ( gltf ) {
       translate = gltf.scene;
       gltf.scene.scale.set(1,1,1);
-  
+      gltf.scene.position.z= 3.1;
+      gltf.scene.position.x= -4.2;
+      gltf.scene.position.y= -1.5;
         scene.add( gltf.scene );
     
       
@@ -157,10 +164,22 @@ scene.add( alight );
       
       } );
     loader.load( 'zoom.glb', function ( gltf ) {
-      zoom= gltf.scene;
-     
-      gltf.scene.scale.set(1,1,1);
+  zoom= gltf.scene;
   
+  //  var rotateZoom = new TWEEN.Tween(zoom.rotation)
+  //  .to({ y:  "-" + Math.PI/2}, 1800)
+  //  .delay(300)
+  //  .onComplete(function() {
+  //      if (Math.abs(zoom.rotation.y)>=2*Math.PI) {
+  //        zoom.rotation.y =zoom.rotation.y % (2*Math.PI);
+  //      }
+  //  })
+  //  .start();
+//  rotateZoom.repeat(Infinity);
+      gltf.scene.scale.set(1,1,1);
+      gltf.scene.position.z= -6.1;
+      gltf.scene.position.x= -2;
+      gltf.scene.position.y= -2;
         scene.add( gltf.scene );
     
       
@@ -189,27 +208,29 @@ let trslted = false;
 
 function downvd(){
   document.getElementById("dl").click();
+ 
 
 }
 
 function trslt(){
 
 if(trslted == false){
-  var engOn = new TWEEN.Tween(mesh1.rotation)
-  .to({ y:  "-" + Math.PI}, 700)
-  .delay(0)
-  .onComplete(function() {
-      if (Math.abs(mesh1.rotation.y)>=2*Math.PI) {
-        mesh1.rotation.y =mesh1.rotation.y % (2*Math.PI);
-      }
-  })
-  .start();
+
   var frOff = new TWEEN.Tween(mesh2.rotation)
   .to({ y: "-" + Math.PI}, 700)
   .delay(0)
   .onComplete(function() {
       if (Math.abs(mesh2.rotation.y)>=2*Math.PI) {
         mesh2.rotation.y =mesh2.rotation.y % (2*Math.PI);
+      }
+  })
+  .start();
+  var engON = new TWEEN.Tween(mesh1.rotation)
+  .to({ y: "-" + Math.PI}, 700)
+  .delay(0)
+  .onComplete(function() {
+      if (Math.abs(mesh1.rotation.y)>=2*Math.PI) {
+        mesh1.rotation.y =mesh1.rotation.y % (2*Math.PI);
       }
   })
   .start();
@@ -263,7 +284,7 @@ function onDocumentMouseDown() {
     
   }
   if (intersects.length > 0 && intersects[0].object.name == "github") {
-    window.open("https://github.com/3Y3Z?tab=repositories");
+    window.open("https://github.com/simoncct1");
     
   }
   if (intersects.length > 0 && intersects[0].object.name == "zoom") {
@@ -313,16 +334,8 @@ function onDocumentMouseDown() {
   //       up= false;
   //       }
   // }
-  function toEng(){
-
-
-  
-  }
-  function toFr(){
 
  
-  
-  }
 
 function animate(){
   requestAnimationFrame( animate );
@@ -333,11 +346,12 @@ function animate(){
   //   else if(up == true){
   //   nevermind();
   //   }
- github.rotation.y += 0.005;
- down.rotation.y += 0.0025;
-//  zoom.rotation.y += 0.005;
-//  mail.rotation.y += 0.005;
-//  translate.rotation.y += 0.005;
+  
+ github.rotation.y += 0.003;
+ down.rotation.y -= 0.0025;
+ mail.rotation.y -= 0.002;
+ zoom.rotation.y -= 0.0025;
+ translate.rotation.y += 0.003;
  TWEEN.update();
 
   renderer.render(scene, camera);
