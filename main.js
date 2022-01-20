@@ -3,8 +3,12 @@ import {OrbitControls} from 'https://threejsfundamentals.org/threejs/resources/t
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { RepeatWrapping } from "three";
-
 const scene = new THREE.Scene();
+{
+  const coloor = 0xffffff;  // white
+  const density = 0.06;
+  scene.fog = new THREE.FogExp2(coloor, density);
+}
 // scene.background = new THREE.Color( 0x464646 );
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const color = 0xFFFFFF;  // white
@@ -15,7 +19,31 @@ const renderer = new THREE.WebGLRenderer({
 
   antialias: true
 });
+const textureLoader = new THREE.TextureLoader();
+const maxAnisotropy = renderer.capabilities.getMaxAnisotropy();
+let geometrye, materiale;
 
+geometrye = new THREE.PlaneGeometry(1000,1000);
+const texture3 = textureLoader.load( "floor.png" );
+texture3.anisotropy = maxAnisotropy;
+texture3.wrapS = texture3.wrapT = THREE.RepeatWrapping;
+texture3.repeat.set( 100,100 );
+materiale = new THREE.MeshPhongMaterial({ color: 0xffffff , map: texture3});
+const floor = new THREE.Mesh( geometrye, materiale );
+floor.position.y = -7
+floor.position.x = 100;
+floor.rotation.x= -Math.PI/2
+scene.add(floor);
+
+
+
+// const material3 = new THREE.MeshPhongMaterial( { color: 0xffffff} );
+// material3.opacity=0.02;
+// const geometry3 = new THREE.BoxGeometry( 1000 , 1000 );
+// const mesh3 = new THREE.Mesh( geometry3, material3 );
+// mesh3.rotation.y = -Math.PI/2;
+// mesh3.position.x = 200;
+// scene.add( mesh3 );
 
 
 renderer.setPixelRatio(window.devicePixelRatio);
@@ -37,11 +65,11 @@ scene.add( ulight );
 const controls = new OrbitControls( camera, renderer.domElement );
 
 
-camera.position.set( -7.4,0,0 );
-controls.maxPolarAngle = Math.PI - 0.15;
-controls.minPolarAngle = 0.15;
-controls.minAzimuthAngle = - Math.PI + 0.15; 
-	controls.maxAzimuthAngle = - 0.15; 
+camera.position.set( -10,0,0 );
+controls.maxPolarAngle = Math.PI - 1.6;
+controls.minPolarAngle = 1.5;
+controls.minAzimuthAngle = - Math.PI + 1,7; 
+	controls.maxAzimuthAngle = - 1,7; 
 controls.update();
 
 
@@ -76,9 +104,9 @@ scene.add( alight );
 
 
 
-  const textureLoader = new THREE.TextureLoader();
+ 
 
-  const maxAnisotropy = renderer.capabilities.getMaxAnisotropy();
+  
 
   const texture1 = textureLoader.load( "cv.png" );
   const material1 = new THREE.MeshPhongMaterial( { color: 0xffffff, map: texture1 } );
@@ -99,11 +127,11 @@ scene.add( alight );
  
 
  
-  const geometry = new THREE.PlaneGeometry( 10, 10, 10 );
+  const geometry = new THREE.PlaneGeometry( 15, 10, 10 );
   const mesh1 = new THREE.Mesh( geometry, material1 );
   mesh1.rotation.y = Math.PI/2;
 
-  const geometry2 = new THREE.PlaneGeometry( 10, 10, 10 );
+  const geometry2 = new THREE.PlaneGeometry( 10, 14, 10 );
   const mesh2 = new THREE.Mesh( geometry2, material2 );
   mesh2.rotation.y = -Math.PI/2;
   
@@ -125,9 +153,9 @@ scene.add( alight );
   loader.load( 'maillogo.glb', function ( gltf ) {
     mail = gltf.scene;
     gltf.scene.scale.set(1,1,1);
-    gltf.scene.position.z= 3.1;
+    gltf.scene.position.z= 6.1;
     gltf.scene.position.x= -4;
-    gltf.scene.position.y= 1.3;
+    gltf.scene.position.y= 1.8;
       scene.add( gltf.scene );
   
     
@@ -139,8 +167,8 @@ scene.add( alight );
     
   loader.load( 'github.glb', function ( gltf ) {
     github = gltf.scene;
-    gltf.scene.scale.set(1,1,1);
-    gltf.scene.position.z= -6;
+    gltf.scene.scale.set(1.5,1.5,1.5);
+    gltf.scene.position.z= -8;
       scene.add( gltf.scene );
   
     
@@ -152,8 +180,8 @@ scene.add( alight );
     loader.load( 'translate.glb', function ( gltf ) {
       translate = gltf.scene;
       gltf.scene.scale.set(1,1,1);
-      gltf.scene.position.z= 3.1;
-      gltf.scene.position.x= -4.2;
+      gltf.scene.position.z=4.1;
+      gltf.scene.position.x= -5.2;
       gltf.scene.position.y= -1.5;
         scene.add( gltf.scene );
     
@@ -176,10 +204,10 @@ scene.add( alight );
   //  })
   //  .start();
 //  rotateZoom.repeat(Infinity);
-      gltf.scene.scale.set(1,1,1);
-      gltf.scene.position.z= -6.1;
+      gltf.scene.scale.set(1.7,1.7,1.7);
+      gltf.scene.position.z= -9.1;
       gltf.scene.position.x= -2;
-      gltf.scene.position.y= -2;
+      gltf.scene.position.y= -3;
         scene.add( gltf.scene );
     
       
@@ -190,10 +218,10 @@ scene.add( alight );
       } );
     loader.load( 'download.glb', function ( gltf ) {
       down= gltf.scene;
-      gltf.scene.scale.set(1.5,1.5,1.5);
-      gltf.scene.position.z= -8;
+      gltf.scene.scale.set(1.7,1.7,1.7);
+      gltf.scene.position.z= -10;
       gltf.scene.position.x= -1;
-      gltf.scene.position.y= 3;
+      gltf.scene.position.y= 3.5;
         scene.add( gltf.scene );
     
       

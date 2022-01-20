@@ -29,10 +29,11 @@ body::-webkit-scrollbar {
   display: none;
 }
 img{
-  width: 100%;
+  width: 80%;
   height: auto;
-  margin-left: auto;
+  margin-left: 10%;
   margin-right: auto;
+  
 }
 
 *{
@@ -77,7 +78,6 @@ img{
 #normalMode{
   position: fixed;
   bottom:3%;
-  left:1%;
   height: 15%;
   width: 15%;
   padding: 10px;
